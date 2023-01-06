@@ -4,9 +4,9 @@ import { BigDecimal, Address } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD, UNTRACKED_PAIRS } from './helpers'
 
 const WBNB_ADDRESS = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-const WBNB_BUSD_PAIR = '0xec726584cae64dd1e949cd2f8ccf1022f6af5fe8'
-const USDT_WBNB_PAIR = '0xb57c9d7b60413235e62261c4e44b62fe29f41d5c'
-const USDC_WBNB_PAIR = '0xd4a3dfd094ff95418e9351a48c66578724f6a479'
+const WBNB_BUSD_PAIR = '0x483653bcF3a10d9a1c334CE16a19471a614F4385'
+const USDT_WBNB_PAIR = '0x6BE6A437A1172e6C220246eCB3A92a45AF9f0Cbc'
+const USDC_WBNB_PAIR = '0x4Cd8a94975e275BD327431e2225f3afBA73B56d7'
 
 export function getEthPriceInUSD(): BigDecimal {
   // fetch eth prices for each stablecoin
@@ -47,6 +47,7 @@ let WHITELIST: string[] = [
   '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3', // DAI
   '0x2170ed0880ac9a755fd29b2688956bd959f933f8', // ETH
   '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c', // BTCB
+  '0xFa4BA88Cf97e282c505BEa095297786c16070129', // CUSD
 ]
 
 // minimum liquidity for price to get tracked
@@ -88,6 +89,7 @@ export function getTrackedVolumeUSD(
   tokenAmount0: BigDecimal,
   token0: Token,
   tokenAmount1: BigDecimal,
+  token1: Token,
   pair: Pair
 ): BigDecimal {
   let bundle = Bundle.load('1')
