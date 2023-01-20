@@ -47,11 +47,19 @@ let WHITELIST: string[] = [
   '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3', // DAI
   '0x2170ed0880ac9a755fd29b2688956bd959f933f8', // ETH
   '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c', // BTCB
+  '0x90c97f71e18723b0cf0dfa30ee176ab653e89f40', // FRAX
   '0xfa4ba88cf97e282c505bea095297786c16070129', // CUSD
+  '0x2f29bc0ffaf9bff337b31cbe6cb5fb3bf12e5840', // DOLA
+  '0x0782b6d8c4551b9760e74c0545a9bcd90bdc41e5', // HAY
+  '0xe80772eaf6e2e18b651f160bc9158b2a5cafca65', // USD+
+  '0x1bdd3cf7f79cfb8edbb955f20ad99211551ba275', // BNBx
 ]
 
 // minimum liquidity for price to get tracked
-let MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('2')
+let MINIMUM_VOLATILE_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('10')
+
+// minimum liquidity for price to get tracked
+let MINIMUM_STABLE_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('100')
 
 /**
  * Search through graph to find derived Eth per token.
@@ -63,16 +71,28 @@ export function findEthPerToken(token: Token): BigDecimal {
   }
   // loop through whitelist and check if paired with any
   for (let i = 0; i < WHITELIST.length; ++i) {
-    let pairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]), false)
-    if (pairAddress.toHexString() != ADDRESS_ZERO) {
-      let pair = Pair.load(pairAddress.toHexString())
-      if (pair.token0 == token.id && pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
+    let volatilePairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]), false)
+    if (volatilePairAddress.toHexString() != ADDRESS_ZERO) {
+      let pair = Pair.load(volatilePairAddress.toHexString())
+      if (pair.token0 == token.id && pair.reserveETH.gt(MINIMUM_VOLATILE_LIQUIDITY_THRESHOLD_ETH)) {
         let token1 = Token.load(pair.token1)
         return pair.token1Price.times(token1.derivedETH as BigDecimal) // return token1 per our token * Eth per token 1
       }
-      if (pair.token1 == token.id && pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
+      if (pair.token1 == token.id && pair.reserveETH.gt(MINIMUM_VOLATILE_LIQUIDITY_THRESHOLD_ETH)) {
         let token0 = Token.load(pair.token0)
         return pair.token0Price.times(token0.derivedETH as BigDecimal) // return token0 per our token * ETH per token 0
+      }
+    }
+    let stablePairAddress = factoryContract.getPair(Address.fromString(token.id), Address.fromString(WHITELIST[i]), true)
+    if (stablePairAddress.toHexString() != ADDRESS_ZERO) {
+      let pair = Pair.load(stablePairAddress.toHexString())
+      if (pair.token0 == token.id && pair.reserveETH.gt(MINIMUM_STABLE_LIQUIDITY_THRESHOLD_ETH)) {
+        let token1 = Token.load(pair.token1)
+        return token1.derivedETH as BigDecimal // return Eth per token 1
+      }
+      if (pair.token1 == token.id && pair.reserveETH.gt(MINIMUM_STABLE_LIQUIDITY_THRESHOLD_ETH)) {
+        let token0 = Token.load(pair.token0)
+        return token0.derivedETH as BigDecimal // return ETH per token 0
       }
     }
   }

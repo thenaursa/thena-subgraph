@@ -1,5 +1,5 @@
 specVersion: 0.0.2
-description: Thena is a decentralized protocol for automated token exchange on Binance Smart Chain.
+description: Thena is a native liquidity layer & AMM on BNB Chain
 repository: https://github.com/thenaursa/thena-subgraph
 schema:
   file: ./schema.graphql
