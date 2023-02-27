@@ -53,6 +53,16 @@ let WHITELIST: string[] = [
   '0x0782b6d8c4551b9760e74c0545a9bcd90bdc41e5', // HAY
   '0xe80772eaf6e2e18b651f160bc9158b2a5cafca65', // USD+
   '0x1bdd3cf7f79cfb8edbb955f20ad99211551ba275', // BNBx
+  '0xf307910a4c7bbc79691fd374889b36d8531b08e3', // Ankr
+  '0x52f24a5e03aee338da5fd9df68d2b6fae1178827', // AnkrBNB
+  '0x64048a7eecf3a2f1ba9e144aac3d7db6e58f555e', // frxETH
+  '0x431e0cd023a32532bf3969cddfc002c00e98429d', // XCAD
+  '0xcc42724c6683b7e57334c4e856f4c9965ed682bd', // MATIC
+  '0xf4c8e32eadec4bfe97e0f595add0f4450a863a11', // THE
+  '0x1ce0c2827e2ef14d5c4f29a091d735a204794041', // AVAX
+  '0xe5c6155ed2924e50f998e28eff932d9b5a126974', // LQDR
+  '0x71be881e9c5d4465b3fff61e89c6f3651e69b5bb', // BRZ
+  '0x316622977073bbc3df32e7d2a9b3c77596a0a603', // jBRL
 ]
 
 // minimum liquidity for price to get tracked
