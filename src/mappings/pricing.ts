@@ -63,13 +63,14 @@ let WHITELIST: string[] = [
   '0xe5c6155ed2924e50f998e28eff932d9b5a126974', // LQDR
   '0x71be881e9c5d4465b3fff61e89c6f3651e69b5bb', // BRZ
   '0x316622977073bbc3df32e7d2a9b3c77596a0a603', // jBRL
+  '0x0b15ddf19d47e6a86a56148fb4afffc6929bcb89', // IDIA
 ]
 
 // minimum liquidity for price to get tracked
-let MINIMUM_VOLATILE_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('10')
+let MINIMUM_VOLATILE_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('3')
 
 // minimum liquidity for price to get tracked
-let MINIMUM_STABLE_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('100')
+let MINIMUM_STABLE_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('30')
 
 /**
  * Search through graph to find derived Eth per token.
